@@ -1,100 +1,69 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+document.getElementById('expense-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('expense-name').value;
+    const amount = parseFloat(document.getElementById('expense-amount').value);
+    addExpense(name, amount);
+    updateTotalExpenses();
+});
+
+document.getElementById('budget-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const amount = parseFloat(document.getElementById('budget-amount').value);
+    document.getElementById('total-budget').innerText = `$${amount.toFixed(2)}`;
+});
+
+document.getElementById('bill-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('bill-name').value;
+    const date = document.getElementById('bill-date').value;
+    addBillReminder(name, date);
+});
+
+document.getElementById('investment-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('investment-name').value;
+    const amount = parseFloat(document.getElementById('investment-amount').value);
+    addInvestment(name, amount);
+    updateTotalInvestments();
+});
+
+function addExpense(name, amount) {
+    const expenseList = document.getElementById('expense-list');
+    const listItem = document.createElement('li');
+    listItem.innerText = `${name}: $${amount.toFixed(2)}`;
+    expenseList.appendChild(listItem);
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+function updateTotalExpenses() {
+    const expenseList = document.getElementById('expense-list').children;
+    let total = 0;
+    for (let item of expenseList) {
+        const amount = parseFloat(item.innerText.split('$')[1]);
+        total += amount;
+    }
+    document.getElementById('total-expenses').innerText = `$${total.toFixed(2)}`;
 }
 
-header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 0;
-    text-align: center;
+function addBillReminder(name, date) {
+    const billList = document.getElementById('bill-list');
+    const listItem = document.createElement('li');
+    listItem.innerText = `${name}: ${date}`;
+    billList.appendChild(listItem);
 }
 
-nav {
-    background-color: #333;
+function addInvestment(name, amount) {
+    const investmentList = document.getElementById('investment-list');
+    const listItem = document.createElement('li');
+    listItem.innerText = `${name}: $${amount.toFixed(2)}`;
+    investmentList.appendChild(listItem);
 }
 
-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
-
-nav ul li {
-    float: left;
-}
-
-nav ul li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-nav ul li a:hover {
-    background-color: #111;
-}
-
-main {
-    flex: 1;
-    padding: 20px;
-}
-
-.cards {
-    display: flex;
-    justify-content: space-between;
-}
-
-.card {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    flex: 1;
-    margin: 10px;
-    text-align: center;
-}
-
-form {
-    margin-bottom: 20px;
-}
-
-form input, form button {
-    padding: 10px;
-    margin: 5px 0;
-    width: calc(100% - 20px);
-}
-
-form button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-form button:hover {
-    background-color: #45a049;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-ul li {
-    background-color: white;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+function updateTotalInvestments() {
+    const investmentList = document.getElementById('investment-list').children;
+    let total = 0;
+    for (let item of investmentList) {
+        const amount = parseFloat(item.innerText.split('$')[1]);
+        total += amount;
+    }
+    document.getElementById('investment-value').innerText = `$${total.toFixed(2)}`;
 }
